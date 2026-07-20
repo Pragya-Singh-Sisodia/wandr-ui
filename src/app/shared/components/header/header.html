@@ -1,0 +1,52 @@
+<header class="header">
+
+  <!-- Brand -->
+  <div class="brand">
+    <span class="brand-icon">🧭</span>
+    <span class="brand-name">Wandr</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav-links">
+
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+
+    <a
+      routerLink="/planner"
+      routerLinkActive="active">
+      Planner
+    </a>
+
+    <a
+      routerLink="/weather"
+      routerLinkActive="active">
+      Weather
+    </a>
+
+    <a
+      routerLink="/assistant"
+      routerLinkActive="active">
+      AI Assistant
+    </a>
+
+    <a
+      routerLink="/trips"
+      routerLinkActive="active">
+      My Trips
+    </a>
+
+  </nav>
+
+  <!-- CTA -->
+  <div>
+    <button class="cta-btn">
+      Start Planning
+    </button>
+  </div>
+
+</header>

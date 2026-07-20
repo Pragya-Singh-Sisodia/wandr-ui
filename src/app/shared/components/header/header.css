@@ -1,0 +1,67 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 48px;
+
+    background: #faf7f2;
+
+    border-bottom: 1px solid #ebe5dd;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    font-size: 28px;
+}
+
+.brand-name {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2f2f2f;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #5b5b5b;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.nav-links a:hover {
+    color: #7FAE9F;
+}
+
+.active {
+    color: #7FAE9F !important;
+    font-weight: 700;
+}
+
+.cta-btn {
+    background: #7FAE9F;
+    color: white;
+
+    border: none;
+
+    border-radius: 999px;
+
+    padding: 12px 22px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+}
