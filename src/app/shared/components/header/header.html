@@ -1,52 +1,71 @@
-<header class="header">
+<header class="flex items-center justify-between bg-[#FAF7F2] border-b border-[#E7E2D9] px-10 py-5">
 
   <!-- Brand -->
-  <div class="brand">
-    <span class="brand-icon">🧭</span>
-    <span class="brand-name">Wandr</span>
+  <div class="flex items-center gap-2">
+    <span class="text-2xl">🧭</span>
+
+    <span class="text-2xl font-bold tracking-wide text-[#2F2F2F]">
+      Wandr
+    </span>
   </div>
 
   <!-- Navigation -->
-  <nav class="nav-links">
+  <nav class="flex items-center gap-8">
 
     <a
       routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }">
+      routerLinkActive="text-[#7FAE9F] font-semibold"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="transition-colors duration-200 hover:text-[#7FAE9F]">
+
       Home
+
     </a>
 
     <a
       routerLink="/planner"
-      routerLinkActive="active">
+      routerLinkActive="text-[#7FAE9F] font-semibold"
+      class="transition-colors duration-200 hover:text-[#7FAE9F]">
+
       Planner
+
     </a>
 
     <a
       routerLink="/weather"
-      routerLinkActive="active">
+      routerLinkActive="text-[#7FAE9F] font-semibold"
+      class="transition-colors duration-200 hover:text-[#7FAE9F]">
+
       Weather
+
     </a>
 
     <a
       routerLink="/assistant"
-      routerLinkActive="active">
+      routerLinkActive="text-[#7FAE9F] font-semibold"
+      class="transition-colors duration-200 hover:text-[#7FAE9F]">
+
       AI Assistant
+
     </a>
 
     <a
       routerLink="/trips"
-      routerLinkActive="active">
+      routerLinkActive="text-[#7FAE9F] font-semibold"
+      class="transition-colors duration-200 hover:text-[#7FAE9F]">
+
       My Trips
+
     </a>
 
   </nav>
 
-  <!-- CTA -->
-  <div>
-    <button class="cta-btn">
-      Start Planning
-    </button>
-  </div>
+  <!-- Primary Action -->
+  <button
+    class="rounded-full bg-[#7FAE9F] px-6 py-3 text-white font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+
+    Start Planning
+
+  </button>
 
 </header>
