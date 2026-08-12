@@ -1,0 +1,107 @@
+@if (destination) {
+
+<div class="mx-auto max-w-7xl px-8 py-16">
+
+  <img
+    [src]="destination.image"
+    [alt]="destination.title"
+    class="mb-10 h-[500px] w-full rounded-3xl object-cover">
+
+  <h1 class="mb-4 font-[Playfair_Display] text-6xl">
+    {{ destination.title }}
+  </h1>
+
+  <p class="mb-3 text-xl text-[#7FAE9F]">
+    📍 {{ destination.location }}
+  </p>
+
+  <p class="mb-8 text-lg text-gray-600">
+    {{ destination.description }}
+  </p>
+
+  <div class="mb-12 flex gap-8">
+
+    <div>
+      <p class="text-sm text-gray-500">
+        Rating
+      </p>
+
+      <p class="font-semibold">
+        ⭐ {{ destination.rating }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">
+        Best Season
+      </p>
+
+      <p class="font-semibold">
+        {{ destination.bestSeason }}
+      </p>
+    </div>
+
+  </div>
+
+  <section class="mt-12">
+
+    <h2 class="mb-4 font-[Playfair_Display] text-4xl">
+      About
+    </h2>
+
+    <p class="leading-8 text-gray-600">
+      {{ destination.about }}
+    </p>
+
+  </section>
+
+  <section class="mt-16">
+
+    <h2 class="mb-6 font-[Playfair_Display] text-4xl">
+      Things To Do
+    </h2>
+
+    <div class="grid gap-4 md:grid-cols-2">
+
+      @for (activity of destination.thingsToDo; track activity) {
+
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          🌿 {{ activity }}
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+  <section class="mt-16">
+
+    <div class="rounded-3xl bg-[#F8F8F8] p-8">
+
+      <h3 class="mb-3 text-2xl font-semibold">
+        Best Time To Visit
+      </h3>
+
+      <p class="text-lg">
+        {{ destination.bestSeason }}
+      </p>
+
+    </div>
+
+  </section>
+
+  <section class="mt-16 mb-24 text-center">
+
+    <button
+      class="rounded-full bg-[#7FAE9F] px-10 py-4 text-lg font-semibold text-white transition hover:-translate-y-1 hover:bg-[#689B8A]">
+
+      Plan My Trip →
+
+    </button>
+
+  </section>
+
+</div>
+
+}

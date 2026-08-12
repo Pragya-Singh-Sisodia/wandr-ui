@@ -18,9 +18,17 @@ export const routes: Routes = [
         component: Home
       },
       {
-        path: 'planner',
-        component: Planner
-      },
+    path: 'destinations/:id',
+    loadComponent: () =>
+        import('./features/destinations/pages/destination-details/destination-details')
+            .then(m => m.DestinationDetails)
+},
+      {
+  path: 'planner',
+  loadComponent: () =>
+    import('./features/planner/pages/planner/planner')
+      .then(m => m.Planner)
+},
       {
         path: 'weather',
         component: Weather

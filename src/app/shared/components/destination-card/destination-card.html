@@ -1,0 +1,48 @@
+<div class="overflow-hidden rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+
+  <img
+    [src]="destination().image"
+    [alt]="destination().title"
+    class="h-56 w-full object-cover">
+
+  <div class="p-6">
+
+    <div class="mb-2 flex items-center justify-between">
+
+      <h3 class="text-2xl font-semibold">
+
+        {{ destination().title }}
+
+      </h3>
+
+      <span class="text-sm">
+
+        ⭐ {{ destination().rating }}
+
+      </span>
+
+    </div>
+
+    <p class="mb-2 text-[#7FAE9F]">
+
+      📍 {{ destination().location }}
+
+    </p>
+
+    <p class="mb-6 text-gray-600">
+
+      {{ destination().description }}
+
+    </p>
+
+    <a
+  [routerLink]="['/destinations', destination().id]"
+  class="font-semibold text-[#7FAE9F] transition hover:translate-x-1">
+
+  Explore →
+
+</a>
+
+  </div>
+
+</div>

@@ -1,1 +1,729 @@
-<p>planner works!</p>
+<div class="mx-auto max-w-6xl px-6 py-16">
+
+  <!-- Heading -->
+
+  <div class="mb-14 text-center">
+
+    <p
+      class="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#7FAE9F]">
+
+      AI Travel Planner
+
+    </p>
+
+    <h1
+      class="font-[Playfair_Display] text-5xl font-bold text-[#2F2F2F] md:text-6xl">
+
+      Plan Your Maharashtra Trip
+
+    </h1>
+
+    <p
+      class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+
+      Tell us your travel preferences and we'll prepare a personalized itinerary.
+
+    </p>
+
+  </div>
+
+  <!-- Planner Form -->
+
+  <form
+    [formGroup]="plannerForm"
+    (ngSubmit)="showFormValue()"
+    class="rounded-[32px] bg-white p-8 shadow-xl">
+
+    <div class="grid gap-6 md:grid-cols-2">
+
+      <!-- From -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          Departure City
+
+        </label>
+
+        <input
+          type="text"
+          formControlName="from"
+          placeholder="Enter your city"
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-[#7FAE9F]">
+
+        @if (
+          plannerForm.get('from')?.invalid &&
+          plannerForm.get('from')?.touched
+        ) {
+
+        <p class="mt-2 text-sm text-red-600">
+
+          Please enter your departure city.
+
+        </p>
+
+        }
+
+      </div>
+
+      <!-- Destination -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          Destination
+
+        </label>
+
+        <select
+          formControlName="destination"
+          class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none transition focus:border-[#7FAE9F]">
+
+          <option value="">
+
+            Select Destination
+
+          </option>
+
+          @for(destination of destinations; track destination.id){
+
+          <option [value]="destination.title">
+
+            {{ destination.title }}
+
+          </option>
+
+          }
+
+        </select>
+
+        @if (
+          plannerForm.get('destination')?.invalid &&
+          plannerForm.get('destination')?.touched
+        ) {
+
+        <p class="mt-2 text-sm text-red-600">
+
+          Please select a destination.
+
+        </p>
+
+        }
+
+      </div>
+
+      <!-- Start Date -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          Start Date
+
+        </label>
+
+        <input
+          type="date"
+          formControlName="startDate"
+          class="w-full rounded-xl border border-gray-300 px-4 py-3">
+
+      </div>
+
+      <!-- End Date -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          End Date
+
+        </label>
+
+        <input
+          type="date"
+          formControlName="endDate"
+          class="w-full rounded-xl border border-gray-300 px-4 py-3">
+
+      </div>
+            <!-- Budget -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          Budget (₹)
+
+        </label>
+
+        <input
+          type="number"
+          formControlName="budget"
+          placeholder="10000"
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-[#7FAE9F]">
+
+        @if (
+          plannerForm.get('budget')?.touched &&
+          plannerForm.get('budget')?.errors
+        ) {
+
+          @if (plannerForm.get('budget')?.errors?.['required']) {
+
+          <p class="mt-2 text-sm text-red-600">
+
+            Budget is required.
+
+          </p>
+
+          }
+
+          @if (plannerForm.get('budget')?.errors?.['min']) {
+
+          <p class="mt-2 text-sm text-red-600">
+
+            Budget must be greater than 0.
+
+          </p>
+
+          }
+
+        }
+
+      </div>
+
+      <!-- Travelers -->
+
+      <div>
+
+        <label class="mb-2 block font-semibold">
+
+          Travelers
+
+        </label>
+
+        <input
+          type="number"
+          min="1"
+          formControlName="travelers"
+          class="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-[#7FAE9F]">
+
+        @if (
+          plannerForm.get('travelers')?.touched &&
+          plannerForm.get('travelers')?.errors
+        ) {
+
+          @if (plannerForm.get('travelers')?.errors?.['min']) {
+
+          <p class="mt-2 text-sm text-red-600">
+
+            At least one traveler is required.
+
+          </p>
+
+          }
+
+        }
+
+      </div>
+
+    </div>
+
+    <!-- Transport -->
+
+    <div class="mt-8">
+
+      <label class="mb-3 block font-semibold">
+
+        Transport
+
+      </label>
+
+      <div class="flex flex-wrap gap-3">
+
+        @for(option of transportOptions; track option) {
+
+        <label
+          class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-5 py-3 transition hover:border-[#7FAE9F]">
+
+          <input
+            type="radio"
+            [value]="option"
+            formControlName="transport">
+
+          <span>
+
+            {{ option }}
+
+          </span>
+
+        </label>
+
+        }
+
+      </div>
+
+    </div>
+
+    <!-- Stay -->
+
+    <div class="mt-8">
+
+      <label class="mb-3 block font-semibold">
+
+        Stay Preference
+
+      </label>
+
+      <div class="flex flex-wrap gap-3">
+
+        @for(option of stayOptions; track option) {
+
+        <label
+          class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-5 py-3 transition hover:border-[#7FAE9F]">
+
+          <input
+            type="radio"
+            [value]="option"
+            formControlName="stay">
+
+          <span>
+
+            {{ option }}
+
+          </span>
+
+        </label>
+
+        }
+
+      </div>
+
+    </div>
+
+    <!-- Interests -->
+
+    <div class="mt-8">
+
+      <label class="mb-3 block font-semibold">
+
+        Interests
+
+      </label>
+
+      <div class="grid gap-3 md:grid-cols-3">
+
+        @for(interest of interestOptions; track interest) {
+
+        <label
+          class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-4 transition hover:border-[#7FAE9F]">
+
+          <input
+            type="checkbox"
+            (change)="onInterestChange($event, interest)">
+
+          <span>
+
+            {{ interest }}
+
+          </span>
+
+        </label>
+
+        }
+
+      </div>
+
+    </div>
+
+    <!-- Generate Button -->
+
+    <div class="mt-10 text-center">
+
+      <button
+        type="submit"
+        [disabled]="isLoading"
+        class="rounded-full bg-[#7FAE9F] px-10 py-4 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#689B8A] disabled:cursor-not-allowed disabled:opacity-50">
+
+        @if (isLoading) {
+
+          Generating your itinerary...
+
+        } @else {
+
+          Generate My Trip →
+
+        }
+
+      </button>
+
+    </div>
+
+  </form>
+ @if (generatedTrip !== undefined) {
+
+  <section
+    class="mt-12 rounded-[32px] bg-white p-8 shadow-xl md:p-10">
+
+    <div class="mb-10 text-center">
+
+      <p
+        class="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#7FAE9F]">
+
+        Your Personalized Journey
+
+      </p>
+
+      <h2
+        class="font-[Playfair_Display] text-4xl font-bold text-[#2F2F2F] md:text-5xl">
+
+        {{ generatedTrip.title }}
+
+      </h2>
+
+    </div>
+
+    <!-- Itinerary -->
+         <!-- Trip Summary -->
+
+    <div
+      class="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+
+      <!-- Destination -->
+
+      <div
+        class="rounded-2xl bg-[#F8F8F8] p-5">
+
+        <p class="text-sm text-gray-500">
+
+          📍 Destination
+
+        </p>
+
+        <p class="mt-2 font-semibold text-[#2F2F2F]">
+
+          {{ plannerForm.value.destination }}
+
+        </p>
+
+      </div>
+
+      <!-- Dates -->
+
+      <div
+        class="rounded-2xl bg-[#F8F8F8] p-5">
+
+        <p class="text-sm text-gray-500">
+
+          📅 Dates
+
+        </p>
+
+        <p class="mt-2 font-semibold text-[#2F2F2F]">
+
+          {{ plannerForm.value.startDate }}
+
+          →
+
+          {{ plannerForm.value.endDate }}
+
+        </p>
+
+      </div>
+
+      <!-- Travelers -->
+
+      <div
+        class="rounded-2xl bg-[#F8F8F8] p-5">
+
+        <p class="text-sm text-gray-500">
+
+          👥 Travelers
+
+        </p>
+
+        <p class="mt-2 font-semibold text-[#2F2F2F]">
+
+          {{ plannerForm.value.travelers }}
+
+        </p>
+
+      </div>
+
+      <!-- Transport -->
+
+      <div
+        class="rounded-2xl bg-[#F8F8F8] p-5">
+
+        <p class="text-sm text-gray-500">
+
+          🚗 Transport
+
+        </p>
+
+        <p class="mt-2 font-semibold text-[#2F2F2F]">
+
+          {{ plannerForm.value.transport }}
+
+        </p>
+
+      </div>
+
+      <!-- Stay -->
+
+      <div
+        class="rounded-2xl bg-[#F8F8F8] p-5">
+
+        <p class="text-sm text-gray-500">
+
+          🏨 Stay
+
+        </p>
+
+        <p class="mt-2 font-semibold text-[#2F2F2F]">
+
+          {{ plannerForm.value.stay }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <div>
+
+      <h3 class="mb-6 text-2xl font-semibold text-[#2F2F2F]">
+
+        🗓 Your Itinerary
+
+      </h3>
+
+      <div class="space-y-5">
+
+       @for (day of generatedTrip.days; track day.day) {
+
+  <div
+    class="group rounded-3xl border border-gray-200 bg-[#FAFAFA] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+    <div class="flex items-start gap-5">
+
+      <!-- Day Number -->
+
+      <div
+        class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#7FAE9F] text-lg font-bold text-white shadow-sm">
+
+        {{ day.day }}
+
+      </div>
+
+      <!-- Day Information -->
+
+      <div class="min-w-0 flex-1">
+
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+          Day {{ day.day }}
+
+        </p>
+
+        <h4
+          class="mt-1 text-2xl font-semibold text-[#2F2F2F]">
+
+          {{ day.title }}
+
+        </h4>
+
+        <p
+          class="mt-3 leading-7 text-gray-600">
+
+          {{ day.description }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+      </div>
+
+          <!-- Budget Breakdown -->
+
+    <div
+      class="mt-12 rounded-3xl bg-[#F8F8F8] p-6 md:p-8">
+
+      <div class="mb-6">
+
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+          Estimated Cost
+
+        </p>
+
+        <h3
+          class="mt-1 text-3xl font-semibold text-[#2F2F2F]">
+
+          💰 Budget Breakdown
+
+        </h3>
+
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+
+        <!-- Transport -->
+
+        <div
+          class="rounded-2xl bg-white p-5 shadow-sm">
+
+          <p class="text-sm text-gray-500">
+
+            🚗 Transport
+
+          </p>
+
+          <p class="mt-2 text-2xl font-bold text-[#2F2F2F]">
+
+            ₹{{ generatedTrip.estimatedBudget.transport }}
+
+          </p>
+
+        </div>
+
+        <!-- Stay -->
+
+        <div
+          class="rounded-2xl bg-white p-5 shadow-sm">
+
+          <p class="text-sm text-gray-500">
+
+            🏨 Stay
+
+          </p>
+
+          <p class="mt-2 text-2xl font-bold text-[#2F2F2F]">
+
+            ₹{{ generatedTrip.estimatedBudget.stay }}
+
+          </p>
+
+        </div>
+
+        <!-- Food -->
+
+        <div
+          class="rounded-2xl bg-white p-5 shadow-sm">
+
+          <p class="text-sm text-gray-500">
+
+            🍴 Food
+
+          </p>
+
+          <p class="mt-2 text-2xl font-bold text-[#2F2F2F]">
+
+            ₹{{ generatedTrip.estimatedBudget.food }}
+
+          </p>
+
+        </div>
+
+        <!-- Activities -->
+
+        <div
+          class="rounded-2xl bg-white p-5 shadow-sm">
+
+          <p class="text-sm text-gray-500">
+
+            🎟 Activities
+
+          </p>
+
+          <p class="mt-2 text-2xl font-bold text-[#2F2F2F]">
+
+            ₹{{ generatedTrip.estimatedBudget.activities }}
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    </div>
+        <!-- Packing Checklist -->
+
+    <div
+      class="mt-12 rounded-3xl bg-[#F8F8F8] p-6 md:p-8">
+
+      <div class="mb-6">
+
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+          Travel Essentials
+
+        </p>
+
+        <h3
+          class="mt-1 text-3xl font-semibold text-[#2F2F2F]">
+
+          🎒 Packing Checklist
+
+        </h3>
+
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+
+        @for (item of generatedTrip.packingList; track item) {
+
+        <div
+          class="flex items-center gap-3 rounded-2xl bg-white p-5 shadow-sm">
+
+          <span
+            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E8F2EE] text-[#2E5E4E]">
+
+            ✓
+
+          </span>
+
+          <span class="text-gray-700">
+
+            {{ item }}
+
+          </span>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+}
+    <!-- Error Message -->
+
+  @if (errorMessage) {
+
+  <div
+    class="mt-8 rounded-2xl border border-red-300 bg-red-50 p-5 text-red-700">
+
+    {{ errorMessage }}
+
+  </div>
+
+  }
+
+  <!-- Generated Itinerary -->
+
+  

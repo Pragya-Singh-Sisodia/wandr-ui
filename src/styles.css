@@ -1,3 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import 'tailwindcss';
+/* ------------------------------
+   Wandr Design Tokens
+------------------------------ */
+
+:root {
+
+  /* Backgrounds */
+  --wandr-bg: #FAF7F2;
+  --wandr-surface: #FFFFFF;
+
+  /* Brand */
+  --wandr-primary: #7FAE9F;
+  --wandr-primary-dark: #689B8A;
+
+  /* Accent */
+  --wandr-peach: #F2C6B4;
+  --wandr-lavender: #CFC7F8;
+
+  /* Text */
+  --wandr-text: #2F2F2F;
+  --wandr-text-light: #6B7280;
+
+  /* Borders */
+  --wandr-border: #E7E2D9;
+
+  /* Shadow */
+  --wandr-shadow:
+      0 10px 35px rgba(0,0,0,.08);
+
+}
+
+/* Base */
+
+body{
+
+    background: var(--wandr-bg);
+
+    color: var(--wandr-text);
+
+    font-family: Inter, sans-serif;
+
+}
