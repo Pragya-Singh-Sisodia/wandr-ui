@@ -1,1 +1,298 @@
-<p>weather works!</p>
+<div class="mx-auto max-w-6xl px-6 py-16">
+
+  <!-- Heading -->
+
+  <div class="mb-14 text-center">
+
+    <p
+      class="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#7FAE9F]">
+
+      Maharashtra Weather
+
+    </p>
+
+    <h1
+      class="font-[Playfair_Display] text-5xl font-bold text-[#2F2F2F] md:text-6xl">
+
+      Weather for Your Journey
+
+    </h1>
+
+    <p
+      class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+
+      Check the weather before you explore Maharashtra's beautiful destinations.
+
+    </p>
+
+  </div>
+
+
+  <!-- Search / Location -->
+
+  <div
+    class="mx-auto mb-12 max-w-3xl rounded-[32px] bg-white p-8 shadow-xl">
+
+    <label
+      class="mb-3 block font-semibold text-[#2F2F2F]">
+
+      Choose a destination
+
+    </label>
+
+    <div class="flex flex-col gap-4 sm:flex-row">
+
+      <select
+        [(ngModel)]="selectedDestination"
+        class="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 focus:border-[#7FAE9F] focus:outline-none">
+
+        <option value="">
+
+          Select a Maharashtra destination
+
+        </option>
+
+        @for (destination of destinations; track destination.id) {
+
+          <option [value]="destination.title">
+
+            {{ destination.title }}
+
+          </option>
+
+        }
+
+      </select>
+
+
+      <button
+        type="button"
+        (click)="checkWeather()"
+        [disabled]="isLoading"
+        class="rounded-xl bg-[#7FAE9F] px-7 py-3 font-semibold text-white transition hover:bg-[#689B8A] disabled:cursor-not-allowed disabled:opacity-50">
+
+        @if (isLoading) {
+
+          Loading weather...
+
+        } @else {
+
+          Check Weather
+
+        }
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- Error Message -->
+
+  @if (errorMessage) {
+
+    <div
+      class="mx-auto mb-8 max-w-3xl rounded-2xl border border-red-300 bg-red-50 p-4 text-red-700">
+
+      {{ errorMessage }}
+
+    </div>
+
+  }
+
+
+  <!-- Weather Result -->
+
+  @if (weatherData) {
+
+    <div
+      class="rounded-[32px] bg-white p-8 shadow-xl">
+
+      <!-- Forecast Header -->
+
+      <div
+        class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+
+        <div>
+
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+            Forecast
+
+          </p>
+
+          <h2
+            class="mt-2 font-[Playfair_Display] text-4xl font-bold text-[#2F2F2F]">
+
+            {{ weatherData.location }}
+
+          </h2>
+
+          <p class="mt-2 text-gray-500">
+
+            4-day weather forecast for your journey
+
+          </p>
+
+        </div>
+
+        <div
+          class="rounded-full bg-[#E8F2EE] px-5 py-2 text-sm font-medium text-[#2E5E4E]">
+
+          🌤️ Maharashtra
+
+        </div>
+
+      </div>
+
+
+      <!-- Forecast Cards -->
+
+      <div
+        class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+        @for (day of weatherData.days; track day.date) {
+
+          <div
+            class="rounded-3xl border border-gray-100 bg-[#F8F8F8] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+            <!-- Date -->
+
+            <p
+              class="text-sm font-semibold text-gray-500">
+
+              {{ day.date }}
+
+            </p>
+
+
+            <!-- Temperature -->
+
+            <div
+              class="mt-5 flex items-center justify-between">
+
+              <p
+                class="text-4xl font-bold text-[#2F2F2F]">
+
+                {{ day.temperature }}°
+
+              </p>
+
+              <span class="text-4xl">
+
+                @if (day.condition === 'Light Rain') {
+
+                  🌧️
+
+                } @else if (day.condition === 'Cloudy') {
+
+                  ☁️
+
+                } @else {
+
+                  ⛅
+
+                }
+
+              </span>
+
+            </div>
+
+
+            <!-- Condition -->
+
+            <p
+              class="mt-3 font-semibold text-[#7FAE9F]">
+
+              {{ day.condition }}
+
+            </p>
+
+
+            <!-- Details -->
+
+            <div
+              class="mt-6 space-y-3 border-t border-gray-200 pt-5 text-sm text-gray-600">
+
+              <div class="flex justify-between">
+
+                <span>
+
+                  Feels like
+
+                </span>
+
+                <span class="font-medium text-gray-800">
+
+                  {{ day.feelsLike }}°C
+
+                </span>
+
+              </div>
+
+
+              <div class="flex justify-between">
+
+                <span>
+
+                  💧 Humidity
+
+                </span>
+
+                <span class="font-medium text-gray-800">
+
+                  {{ day.humidity }}%
+
+                </span>
+
+              </div>
+
+
+              <div class="flex justify-between">
+
+                <span>
+
+                  🌧 Rain chance
+
+                </span>
+
+                <span class="font-medium text-gray-800">
+
+                  {{ day.precipitationChance }}%
+
+                </span>
+
+              </div>
+
+
+              <div class="flex justify-between">
+
+                <span>
+
+                  💨 Wind
+
+                </span>
+
+                <span class="font-medium text-gray-800">
+
+                  {{ day.windSpeed }} km/h
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
