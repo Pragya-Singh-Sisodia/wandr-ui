@@ -1,1 +1,349 @@
-<p>trips works!</p>
+<div class="mx-auto max-w-6xl px-6 py-16">
+
+  <!-- Heading -->
+
+  <div class="mb-14 text-center">
+
+    <p
+      class="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#7FAE9F]">
+
+      Your Journeys
+
+    </p>
+
+    <h1
+      class="font-[Playfair_Display] text-5xl font-bold text-[#2F2F2F] md:text-6xl">
+
+      My Trips
+
+    </h1>
+
+    <p
+      class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+
+      Your saved Maharashtra adventures.
+
+    </p>
+
+  </div>
+
+  <!-- Empty State -->
+
+  @if (savedTrips.length === 0) {
+
+    <div
+      class="mx-auto max-w-2xl rounded-[32px] bg-white p-10 text-center shadow-xl">
+
+      <div
+        class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#E8F2EE] text-4xl">
+
+        🧳
+
+      </div>
+
+      <h2
+        class="mt-6 font-[Playfair_Display] text-3xl font-semibold text-[#2F2F2F]">
+
+        No trips saved yet
+
+      </h2>
+
+      <p
+        class="mx-auto mt-4 max-w-md leading-7 text-gray-600">
+
+        Start planning your Maharashtra adventure and save your itinerary here for later.
+
+      </p>
+
+      <button
+        type="button"
+        (click)="goToPlanner()"
+        class="mt-8 rounded-full bg-[#7FAE9F] px-8 py-3 font-semibold text-white shadow-md transition hover:-translate-y-1 hover:bg-[#689B8A]">
+
+        Plan a Trip →
+
+      </button>
+
+    </div>
+
+  }
+
+  <!-- Saved Trips -->
+
+  @if (savedTrips.length > 0) {
+
+    <div class="grid gap-8 md:grid-cols-2">
+
+      @for (trip of savedTrips; track trip.id) {
+
+        <div
+          class="overflow-hidden rounded-[32px] bg-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+
+          <!-- Trip Header -->
+
+          <div
+            class="bg-[#E8F2EE] p-7">
+
+            <p
+              class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+              Saved Journey
+
+            </p>
+
+            <h2
+              class="mt-2 font-[Playfair_Display] text-3xl font-bold text-[#2F2F2F]">
+
+              {{ trip.destination }}
+
+            </h2>
+
+            <p class="mt-2 text-gray-600">
+
+              {{ trip.from }} → {{ trip.destination }}
+
+            </p>
+
+          </div>
+
+          <!-- Trip Details -->
+
+          <div class="p-7">
+
+            <div class="grid grid-cols-2 gap-4">
+
+              <div
+                class="rounded-2xl bg-[#F8F8F8] p-4">
+
+                <p class="text-sm text-gray-500">
+
+                  📅 Dates
+
+                </p>
+
+                <p class="mt-1 text-sm font-semibold text-[#2F2F2F]">
+
+                  {{ trip.startDate }}
+
+                  →
+
+                  {{ trip.endDate }}
+
+                </p>
+
+              </div>
+
+              <div
+                class="rounded-2xl bg-[#F8F8F8] p-4">
+
+                <p class="text-sm text-gray-500">
+
+                  👥 Travelers
+
+                </p>
+
+                <p class="mt-1 font-semibold text-[#2F2F2F]">
+
+                  {{ trip.travelers }}
+
+                </p>
+
+              </div>
+
+              <div
+                class="rounded-2xl bg-[#F8F8F8] p-4">
+
+                <p class="text-sm text-gray-500">
+
+                  🚗 Transport
+
+                </p>
+
+                <p class="mt-1 font-semibold text-[#2F2F2F]">
+
+                  {{ trip.transport }}
+
+                </p>
+
+              </div>
+
+              <div
+                class="rounded-2xl bg-[#F8F8F8] p-4">
+
+                <p class="text-sm text-gray-500">
+
+                  🏨 Stay
+
+                </p>
+
+                <p class="mt-1 font-semibold text-[#2F2F2F]">
+
+                  {{ trip.stay }}
+
+                </p>
+
+              </div>
+
+            </div>
+
+            <!-- Trip Stats -->
+
+            <div
+              class="mt-6 rounded-2xl bg-[#F8F8F8] p-5">
+
+              <div class="flex items-center justify-between">
+
+                <div>
+
+                  <p class="text-sm text-gray-500">
+
+                    Itinerary
+
+                  </p>
+
+                  <p class="mt-1 font-semibold">
+
+                    {{ trip.itinerary.days.length }} days
+
+                  </p>
+
+                </div>
+
+                <div>
+
+                  <p class="text-sm text-gray-500">
+
+                    Estimated Cost
+
+                  </p>
+
+                  <p class="mt-1 font-semibold">
+
+                    ₹{{
+                      trip.itinerary.estimatedBudget.transport +
+                      trip.itinerary.estimatedBudget.stay +
+                      trip.itinerary.estimatedBudget.food +
+                      trip.itinerary.estimatedBudget.activities
+                    }}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Actions -->
+
+            <div class="mt-6 flex gap-3">
+
+           <button
+  type="button"
+  (click)="viewTrip(trip)"
+  class="flex-1 rounded-full bg-[#7FAE9F] px-5 py-3 font-semibold text-white transition hover:bg-[#689B8A]">
+
+  View Trip
+
+</button>
+
+              <button
+                type="button"
+                (click)="deleteTrip(trip.id)"
+                class="rounded-full border border-red-200 px-5 py-3 font-semibold text-red-600 transition hover:bg-red-50">
+
+                Delete
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+@if (selectedTrip) {
+
+  <section
+    class="mt-12 rounded-[32px] bg-white p-8 shadow-xl md:p-10">
+
+    <div class="mb-10 text-center">
+
+      <p
+        class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+        Saved Itinerary
+
+      </p>
+
+      <h2
+        class="font-[Playfair_Display] text-4xl font-bold text-[#2F2F2F]">
+
+        {{ selectedTrip.itinerary.title }}
+
+      </h2>
+
+    </div>
+
+    <div class="space-y-5">
+
+      @for (
+        day of selectedTrip.itinerary.days;
+        track day.day
+      ) {
+
+        <div
+          class="rounded-3xl border border-gray-200 bg-[#FAFAFA] p-6">
+
+          <div class="flex items-start gap-5">
+
+            <div
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#7FAE9F] font-bold text-white">
+
+              {{ day.day }}
+
+            </div>
+
+            <div>
+
+              <p
+                class="text-xs font-semibold uppercase tracking-[0.2em] text-[#7FAE9F]">
+
+                Day {{ day.day }}
+
+              </p>
+
+              <h3
+                class="mt-1 text-2xl font-semibold text-[#2F2F2F]">
+
+                {{ day.title }}
+
+              </h3>
+
+              <p
+                class="mt-3 leading-7 text-gray-600">
+
+                {{ day.description }}
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+}

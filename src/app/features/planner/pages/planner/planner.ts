@@ -17,6 +17,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { TripsService } from '../../../trips/services/trips.service';
+import { SavedTrip } from '../../../trips/models/saved-trip.model';
 @Component({
   selector: 'app-planner',
    standalone: true,
@@ -28,6 +30,7 @@ export class Planner {
   errorMessage = '';
   isLoading = false;
   private plannerService = inject(PlannerService);
+  private tripsService = inject(TripsService);
   generatedTrip?: Itinerary;
   destinations: Destination[] = DESTINATIONS;
   selectedInterests: string[] = [];
@@ -119,6 +122,49 @@ showFormValue() {
     this.isLoading = false;
 
   }
+
+}
+saveTrip() {
+
+  if (!this.generatedTrip) {
+
+    return;
+
+  }
+
+  const savedTrip: SavedTrip = {
+
+    id: crypto.randomUUID(),
+
+    destination:
+      this.plannerForm.value.destination ?? '',
+
+    from:
+      this.plannerForm.value.from ?? '',
+
+    startDate:
+      this.plannerForm.value.startDate ?? '',
+
+    endDate:
+      this.plannerForm.value.endDate ?? '',
+
+    travelers:
+      Number(this.plannerForm.value.travelers ?? 1),
+
+    transport:
+      this.plannerForm.value.transport ?? 'Car',
+
+    stay:
+      this.plannerForm.value.stay ?? 'Hotel',
+
+    itinerary:
+      this.generatedTrip
+
+  };
+
+  this.tripsService.saveTrip(savedTrip);
+
+  console.log('Trip saved:', savedTrip);
 
 }
 onInterestChange(event: Event, interest: string) {
